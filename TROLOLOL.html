@@ -1,0 +1,99 @@
+<!-- TROLOLOL virus-->
+<!-- By: Jabro-->
+<!-- Hello world at: Nov 7, 2024-->
+<!--Enjoy <3-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trololol</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            user-select: none;
+        }
+        h1 {
+            font-size: 3rem;
+            animation: trololol 2s infinite;
+            position: absolute;
+        }
+        @keyframes trololol {
+            0%, 100% { color: red; }
+            25% { color: yellow; }
+            50% { color: green; }
+            75% { color: blue; }
+        }
+    </style>
+</head>
+<body>
+    <h1>TROLOLOL</h1>
+    <script>
+        let moveInterval, popupTimeout;
+        const popupCount = 10;
+        let popupWindows = [];
+
+        // Function to move the text randomly
+        function moveText() {
+            const text = document.querySelector("h1");
+            const x = Math.random() * (window.innerWidth - text.offsetWidth);
+            const y = Math.random() * (window.innerHeight - text.offsetHeight);
+            text.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        // Function to open popups
+        function openPopups() {
+            for (let i = 0; i < popupCount; i++) {
+                setTimeout(() => {
+                    const newPopup = window.open("", "_blank", "width=300,height=200");
+                    if (newPopup) {
+                        newPopup.document.write(`
+                            <html>
+                                <head><title>TROLOLOL</title></head>
+                                <body style="background:black; color:white; display:flex; justify-content:center; align-items:center; height:100%; margin:0;">
+                                    <h1 style="font-size:2rem;">TROLOLOL</h1>
+                                </body>
+                            </html>
+                        `);
+                        popupWindows.push(newPopup);
+                    }
+                }, i * 500); // Stagger the opening of popups
+            }
+        }
+
+        // Function to check if the main window is closed
+        function monitorWindow() {
+            popupTimeout = setTimeout(openPopups, 10000); // Open popups after 10 seconds
+            window.addEventListener("beforeunload", () => {
+                clearTimeout(popupTimeout);
+                openPopups(); // Trigger popups immediately if the window is closed
+            });
+        }
+
+        // Start moving text and monitoring the window
+        moveInterval = setInterval(moveText, 1000);
+        monitorWindow();
+
+        // Block right-click, Alt+F4, and developer shortcuts
+        document.addEventListener("contextmenu", (e) => e.preventDefault());
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "F12" || (e.ctrlKey && e.key === "u")) {
+                e.preventDefault();
+                alert("LOL");
+            } else if (e.altKey && e.key === "F4") {
+                e.preventDefault();
+                alert("LOL");
+            }
+        });
+    </script>
+</body>
+</html>
