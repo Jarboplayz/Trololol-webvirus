@@ -2,98 +2,103 @@
 <!-- By: Jabro-->
 <!-- Hello world at: Nov 7, 2024-->
 <!--Enjoy <3-->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trololol</title>
+    <title>TROLLOL</title>
     <style>
         body {
             margin: 0;
             overflow: hidden;
-            background: #000;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            user-select: none;
+            background-color: white;
+            color: black;
         }
-        h1 {
-            font-size: 3rem;
-            animation: trololol 2s infinite;
+        .popup {
             position: absolute;
-        }
-        @keyframes trololol {
-            0%, 100% { color: red; }
-            25% { color: yellow; }
-            50% { color: green; }
-            75% { color: blue; }
+            width: 200px;
+            height: 100px;
+            background-color: red;
+            text-align: center;
+            line-height: 100px;
+            color: white;
+            font-size: 20px;
+            display: none;
         }
     </style>
 </head>
 <body>
-    <h1>TROLOLOL</h1>
     <script>
-        let moveInterval, popupTimeout;
-        const popupCount = 10;
-        let popupWindows = [];
+        let musicPlaying = false;
+        
+        // Replace this path with your Trololo song path (Make sure the file is in the same folder or provide the correct path)
+        let trolololAudio = new Audio("trololol.mp3");  // Ensure 'trololol.mp3' is the actual file
 
-        // Function to move the text randomly
-        function moveText() {
-            const text = document.querySelector("h1");
-            const x = Math.random() * (window.innerWidth - text.offsetWidth);
-            const y = Math.random() * (window.innerHeight - text.offsetHeight);
-            text.style.transform = `translate(${x}px, ${y}px)`;
-        }
-
-        // Function to open popups
-        function openPopups() {
-            for (let i = 0; i < popupCount; i++) {
-                setTimeout(() => {
-                    const newPopup = window.open("", "_blank", "width=300,height=200");
-                    if (newPopup) {
-                        newPopup.document.write(`
-                            <html>
-                                <head><title>TROLOLOL</title></head>
-                                <body style="background:black; color:white; display:flex; justify-content:center; align-items:center; height:100%; margin:0;">
-                                    <h1 style="font-size:2rem;">TROLOLOL</h1>
-                                </body>
-                            </html>
-                        `);
-                        popupWindows.push(newPopup);
-                    }
-                }, i * 500); // Stagger the opening of popups
+        // Function to play Trololol song
+        function playTrolololSong() {
+            if (!musicPlaying) {
+                trolololAudio.loop = true; // Loop the song
+                trolololAudio.play();
+                musicPlaying = true;
             }
         }
 
-        // Function to check if the main window is closed
-        function monitorWindow() {
-            popupTimeout = setTimeout(openPopups, 10000); // Open popups after 10 seconds
-            window.addEventListener("beforeunload", () => {
-                clearTimeout(popupTimeout);
-                openPopups(); // Trigger popups immediately if the window is closed
-            });
+        // Function to invert colors
+        function invertColors() {
+            let body = document.body;
+            if (body.style.backgroundColor === "black") {
+                body.style.backgroundColor = "white";
+                body.style.color = "black";
+            } else {
+                body.style.backgroundColor = "black";
+                body.style.color = "white";
+            }
         }
 
-        // Start moving text and monitoring the window
-        moveInterval = setInterval(moveText, 1000);
-        monitorWindow();
-
-        // Block right-click, Alt+F4, and developer shortcuts
-        document.addEventListener("contextmenu", (e) => e.preventDefault());
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "F12" || (e.ctrlKey && e.key === "u")) {
-                e.preventDefault();
+        // Function to handle the key combinations
+        function handleKeyPress(event) {
+            if ((event.altKey && event.key === 'F4') || (event.ctrlKey && event.key === 'u') || event.key === 'F12') {
                 alert("LOL");
-            } else if (e.altKey && e.key === "F4") {
-                e.preventDefault();
-                alert("LOL");
+                invertColors();
+                playTrolololSong();  // Play the song on key combination
             }
-        });
+        }
+
+        // Function to generate popups after closing the main window
+        function generatePopups() {
+            for (let i = 0; i < 10; i++) {
+                let popup = document.createElement('div');
+                popup.className = 'popup';
+                popup.innerText = "TROLLOL";
+                popup.style.left = `${Math.random() * window.innerWidth}px`;
+                popup.style.top = `${Math.random() * window.innerHeight}px`;
+                document.body.appendChild(popup);
+                popup.style.display = 'block';
+            }
+        }
+
+        // Event listener for window close
+        window.onbeforeunload = function() {
+            generatePopups();
+            return null; // Don't show confirmation for closing the page
+        };
+
+        // Function to move the window randomly
+        function moveWindowRandomly() {
+            let mainWindow = document.body;
+            setInterval(() => {
+                mainWindow.style.position = 'absolute';
+                mainWindow.style.top = `${Math.random() * window.innerHeight}px`;
+                mainWindow.style.left = `${Math.random() * window.innerWidth}px`;
+            }, 1000);
+        }
+
+        // Start moving the window randomly when the page loads
+        window.onload = function() {
+            moveWindowRandomly();
+            window.addEventListener("keydown", handleKeyPress);
+        };
     </script>
 </body>
 </html>
